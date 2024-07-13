@@ -48,6 +48,8 @@ Route::post('/otp/verify', [UserController::class, 'verifyOtp'])->name('otp.veri
 
 
 
+
+
 Route::get('admin/login', [AdminController::class, 'index'])->name('admin_login_form');
 Route::post('login/owner', [AdminController::class, 'login'])->name('admin.login');
 Route::post('admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');

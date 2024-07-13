@@ -144,7 +144,7 @@
       
               <!-- /Logo -->
               <h4 class="mb-2">Enter OTP 🔒</h4>
-              <p class="mb-4">Enter your OTP Code that sent on your phone.</p>
+              <p class="mb-4">Enter your OTP Code that sent on your Mail.</p>
               <form id="formAuthentication" class="mb-3" action="{{ route('otp.verify') }}" method="POST">
                 @csrf
                 <input type="hidden" name="email" value="{{ $email }}">

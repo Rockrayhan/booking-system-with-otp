@@ -42,7 +42,7 @@ public function register(Request $request)
     $user->sendEmailVerificationNotification();
     
 
-    return redirect('/login')->with('msg', 'Registration successful! Please check your email for verification link.');
+    return redirect('/register')->with('msg', 'Please check your email for verification link.');
 }
 
 
@@ -80,7 +80,9 @@ public function login(Request $request)
     }
 
     return redirect('/login')->with('error', 'Invalid credentials. Please try again.');
+    
 }
+
 
 
 
