@@ -224,6 +224,12 @@
           <div class="content-wrapper">
             <!-- Content -->
 
+            @if (session('msg'))
+            <div class="alert alert-success">
+                {{ session('msg') }}
+            </div>
+        @endif
+
 			<div class="container-xxl flex-grow-1 container-p-y">
 
         <h1> Welcome Dear,  {{ Auth::user()->name }} </h1>

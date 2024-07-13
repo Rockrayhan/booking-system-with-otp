@@ -134,6 +134,13 @@
                   <span class="app-brand-text demo text-body fw-bolder">ADMIN</span>
                 </a>
               </div>
+
+    
+              @if (session('error'))
+              <div class="alert alert-danger">
+                  {{ session('error') }}
+              </div>
+          @endif
               <!-- /Logo -->
               <h4 class="mb-2">Admin Login</h4>
               

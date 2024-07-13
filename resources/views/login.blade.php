@@ -148,6 +148,14 @@
               </div>
           @endif
 
+
+          
+          @if (session('msg'))
+          <div class="alert alert-success">
+              {{ session('msg') }}
+          </div>
+      @endif
+
               <form id="formAuthentication" class="mb-3" action=" {{route('login')}} " method="POST">
                 @csrf
                 <div class="mb-3">

@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
  
-        return redirect('/login')->with('success', 'Registration successful! Please log in.');
+        return redirect('/login')->with('msg', 'Registration successful! Please log in.');
     }
 
 
@@ -50,7 +50,7 @@ public function login(Request $request)
     $credentials = $request->only('email', 'password');
  
     if (Auth::attempt($credentials)) {
-        return redirect()->intended('/');
+        return redirect()->intended('/')->with('msg', 'SuccessFully logged in...');
     }
  
     return redirect('/login')->with('error', 'Invalid credentials. Please try again.');

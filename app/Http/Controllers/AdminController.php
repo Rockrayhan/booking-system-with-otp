@@ -17,9 +17,9 @@ class AdminController extends Controller
         // dd($request->all()) ;
         if(Auth::guard('admin')->attempt(['email'=>$request->email,
         "password"=>$request->password])){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('msg', 'Welcome To Admin Dashboard');
         } else {
-            return redirect()->route('admin_login_form');
+            return redirect()->route('admin_login_form')->with('error', 'Invalid Credentials.. ');
         }
     }
 

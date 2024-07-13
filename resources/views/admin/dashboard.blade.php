@@ -225,6 +225,13 @@
           <div class="content-wrapper">
             <!-- Content -->
 
+            
+         @if (session('msg'))
+         <div class="alert alert-success">
+             {{ session('msg') }}
+         </div>
+     @endif
+
             <div class="card p-5">
               <h5 class="card-header">Users</h5>
               <div class="table-responsive text-nowrap">
