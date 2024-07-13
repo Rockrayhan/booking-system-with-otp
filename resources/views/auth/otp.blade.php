@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
-</head>
-<body>
-    <h1>OTP Verification</h1>
-
-    @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-
-    <form action="{{ route('otp.verify') }}" method="POST">
-        @csrf
-        <input type="hidden" name="email" value="{{ $email }}">
-        <div>
-            <label for="otp">OTP:</label>
-            <input type="text" id="otp" name="otp">
-            @error('otp')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <button type="submit">Verify OTP</button>
-    </form>
-</body>
-</html>
-
-
 
 
 <!DOCTYPE html>
