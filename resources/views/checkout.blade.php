@@ -160,7 +160,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{asset('assets/img/avatars/1.png')}}" alt
+                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
                                             class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
@@ -170,13 +170,14 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{asset('assets/img/avatars/1.png')}}" alt
+                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
                                                             class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block"> {{ Auth::user()->name }} </span>
-                                                    
+                                                    <span class="fw-semibold d-block"> {{ Auth::user()->name }}
+                                                    </span>
+
                                                 </div>
                                             </div>
                                         </a>
@@ -212,86 +213,109 @@
 
                         <!-- Examples -->
 
-                        
 
-                          <!-- Flash Message -->
-                          @if (session('msg'))
-                              <div class="alert alert-success">
-                                  {{ session('msg') }}
-                              </div>
-                          @endif
-                      
+
+                        <!-- Flash Message -->
+                        @if (session('msg'))
+                            <div class="alert alert-success">
+                                {{ session('msg') }}
+                            </div>
+                        @endif
+
+                        {{-- show validation error --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
 
                         <div class="row mb-5">
-                          <form action="{{ route('product.order') }}" method="POST">
-                              @csrf
-                      
-                              <div class="col-md-12 col-lg-12 mb-3">
-                                  <div class="card mb-4">
-                                      <h5 class="card-header">Item Info</h5>
-                                      <div class="card-body">
-                                          <div class="mb-3 row">
-                                              <label for="html5-text-input" class="col-md-2 col-form-label">Item Name</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" type="text" name="product_name"
-                                                      value="{{ $products['name'] }}" id="html5-text-input" readonly />
-                                              </div>
-                                          </div>
-                                          <div class="mb-3 row">
-                                              <label for="html5-search-input" class="col-md-2 col-form-label">Amount</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" type="text" name="price"
-                                                      value="{{ $products['price'] }}" id="html5-search-input" readonly />
-                                              </div>
-                                          </div>
-                                          <div class="mb-3 row">
-                                              <label for="html5-email-input" class="col-md-2 col-form-label">Total Payable</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" type="text" name="total_price"
-                                                      value="{{ $products['price'] }}" id="html5-email-input" readonly />
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="card mb-4">
-                                      <h5 class="card-header">Billing Info</h5>
-                                      <div class="card-body">
-                                          <div class="mb-3 row">
-                                              <label for="html5-url-input" class="col-md-2 col-form-label">Full Name</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" type="text" name="user_name"
-                                                      value="{{ Auth::user()->name }}" id="html5-url-input" />
-                                              </div>
-                                          </div>
-                                          <div class="mb-3 row">
-                                              <label for="html5-tel-input" class="col-md-2 col-form-label">Email</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" name="user_email" type="email"
-                                                      value="{{ Auth::user()->email }}" id="html5-tel-input" readonly />
-                                              </div>
-                                          </div>
-                                          <div class="mb-3 row">
-                                              <label for="html5-tel-input" class="col-md-2 col-form-label">Phone</label>
-                                              <div class="col-md-10">
-                                                  <input class="form-control" name="user_phone" type="tel"
-                                                      value="" id="html5-tel-input" />
-                                              </div>
-                                          </div>
-                                          <div class="mb-3 row">
-                                              <label for="html5-password-input" class="col-md-2 col-form-label">Full Address</label>
-                                              <div class="col-md-10">
-                                                  <textarea class="form-control" name="user_address" id="html5-password-input"></textarea>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-12 col-lg-12">
-                                      <button type="submit" class="btn btn-primary"><i class="tf-icons bx bx-cart-alt me-1"></i>Buy Now</button>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
-                      
+                            <form action="{{ route('product.order') }}" method="POST" id="orderForm">
+                                @csrf
+
+                                <div class="col-md-12 col-lg-12 mb-3">
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">Item Info</h5>
+                                        <div class="card-body">
+                                            <div class="mb-3 row">
+                                                <label for="html5-text-input" class="col-md-2 col-form-label">Item
+                                                    Name</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="text" name="product_name"
+                                                        value="{{ $products['name'] }}" id="html5-text-input"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="html5-search-input"
+                                                    class="col-md-2 col-form-label">Amount</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="text" name="price"
+                                                        value="{{ $products['price'] }}" id="html5-search-input"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="html5-email-input" class="col-md-2 col-form-label">Total
+                                                    Payable</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="text" name="total_price"
+                                                        value="{{ $products['price'] }}" id="html5-email-input"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">Billing Info</h5>
+                                        <div class="card-body">
+                                            <div class="mb-3 row">
+                                                <label for="html5-url-input" class="col-md-2 col-form-label">Full
+                                                    Name</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" type="text" name="user_name"
+                                                        value="{{ Auth::user()->name }}" id="html5-url-input" />
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="html5-tel-input"
+                                                    class="col-md-2 col-form-label">Email</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="user_email" type="email"
+                                                        value="{{ Auth::user()->email }}" id="html5-tel-input"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="html5-tel-input"
+                                                    class="col-md-2 col-form-label">Phone</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="user_phone" type="tel"
+                                                        value="" id="html5-tel-input" />
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="html5-password-input" class="col-md-2 col-form-label">Full
+                                                    Address</label>
+                                                <div class="col-md-10">
+                                                    <textarea class="form-control" name="user_address" id="html5-password-input"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12">
+                                        <button id="buyNowBtn" type="submit" class="btn btn-primary"><i
+                                                class="tf-icons bx bx-cart-alt me-1"></i>Buy Now</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                         </form>
                     </div>
                     <!-- Examples -->
@@ -332,6 +356,16 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        document.getElementById('buyNowBtn').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            if (confirm('Are you sure you want to proceed with this purchase?')) {
+                document.getElementById('orderForm').submit(); // Submit form if confirmed
+            }
+        });
+    </script>
+
 </body>
 
 </html>

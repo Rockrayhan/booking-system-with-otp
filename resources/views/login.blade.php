@@ -158,7 +158,7 @@
 
           
           @if (session('error'))
-          <div class="alert alert-success">
+          <div class="alert alert-danger">
               {{ session('error') }}
           </div>
       @endif
@@ -202,7 +202,7 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Login </button>
+                  <button class="btn btn-primary d-grid w-100"  type="submit">Login </button>
                 </div>
               </form>
 
@@ -242,5 +242,7 @@
   
       <!-- Place this tag in your head or just before your close body tag. -->
       <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+   
   </body>
 </html>

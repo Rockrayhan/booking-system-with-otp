@@ -23,8 +23,8 @@ class CheckoutController extends Controller
             'price' => 'required|numeric',
             'user_name' => 'required|string',
             'user_email' => 'required|email',
-            'user_phone' => 'nullable|string',
-            'user_address' => 'nullable|string',
+            'user_phone' => 'required|string',
+            'user_address' => 'required|string',
         ]);
     
         $data = [

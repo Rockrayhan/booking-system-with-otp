@@ -18,98 +18,103 @@ class UserController extends Controller
         $products = Product::all() ;
         return view('frontend.layouts.app', compact('products'));
     }
+
     public function showRegistrationForm()
     {
         return view('register');
     }
- 
-
-
-public function register(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6',
-    ]);
-
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
-
-    $user->sendEmailVerificationNotification();
-    
-
-    return redirect('/register')->with('msg', 'Please check your email for verification link.');
-}
-
-
 
     public function showLoginForm()
-{
-    return view('login');
-}
-
-
-
-
+    {
+        return view('login');
+    }
  
-public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
+    
+        // Create a new user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+    
         // Generate OTP
         $otp = rand(100000, 999999);
         $user->otp = $otp;
-        $user->otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->otp_expires_at = Carbon::now()->addMinutes(10); // OTP valid for 10 minutes
         $user->save();
-
+    
         // Send OTP via email
-        Mail::raw("Your OTP is: $otp", function ($message) use ($user) {
+        Mail::raw("Your OTP for registration is: $otp", function ($message) use ($user) {
             $message->to($user->email)
-                ->subject('Your OTP for Login');
+                ->subject('Your OTP for Registration');
         });
-
-        Auth::logout();
+    
+        // Log the user out (if needed) and redirect to OTP verification page
+        Auth::logout();  // Optional: based on your flow
         return view('auth.otp', ['email' => $user->email]);
     }
-
-    return redirect('/login')->with('error', 'Invalid credentials. Please try again.');
     
-}
 
 
 
 
-
-public function verifyOtp(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'otp' => 'required|numeric',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if ($user && $user->otp === $request->otp && Carbon::now()->lessThanOrEqualTo($user->otp_expires_at)) {
-        Auth::login($user);
-
-        // Clear OTP
-        $user->otp = null;
-        $user->otp_expires_at = null;
-        $user->save();
-
-        return redirect('/')->with('msg', 'Successfully logged in.');
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::attempt($credentials)) {
+            // Redirect to the intended page after successful login
+            return redirect('/')->with('msg', 'Successfully logged in.');
+        }
+    
+        return redirect('/login')->with('error', 'Invalid credentials. Please try again.');
     }
+    
 
-    return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
-}
 
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|numeric',
+        ]);
+    
+        // Find the user by email
+        $user = User::where('email', $request->email)->first();
+    
+        // Check if the OTP is valid and not expired
+        if ($user && $user->otp === $request->otp && Carbon::now()->lessThanOrEqualTo($user->otp_expires_at)) {
+            // Mark the user as verified
+            $user->email_verified_at = Carbon::now();
+            $user->otp = null; // Clear OTP after successful verification
+            $user->otp_expires_at = null;
+            $user->save();
+    
+            // Log the user in
+            Auth::login($user);
+    
+            // Redirect to the home page after successful OTP verification
+            return redirect('/')->with('msg', 'Successfully verified and logged in.');
+        }
+    
+        // If OTP is invalid or expired, return an error message
+        return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
+    }
+    
 
 
 
