@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -28,6 +29,22 @@ class UserController extends Controller
     {
         return view('login');
     }
+
+
+
+    public function myBooking()
+    {
+        $user_id = Auth::user()->id ?? "";
+    
+        // Fetch all confirmed bookings for the logged-in user
+        $confirmed = Order::where('user_id', $user_id)->with('product')->get();
+    
+        return view('frontend.layouts.mybookings', compact('confirmed'));
+    }
+    
+
+
+
  
 
     public function register(Request $request)

@@ -222,7 +222,7 @@
           <!-- / Navbar -->
 
           <!-- Content wrapper -->
-          <div class="content-wrapper">
+          <div class="h-100">
             <!-- Content -->
 
             
@@ -233,46 +233,45 @@
      @endif
 
             <div class="card p-5">
-              <h5 class="card-header">Users</h5>
-              <div class="table-responsive text-nowrap">
+              <h5 class="card-header">Bookings</h5>
+              <div class=" ">
                 <table class="table table-dark">
                   <thead>
-                    <tr>
-                      <th>Product Name</th>
-                      <th>User name</th>
-                      
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
+                      <tr>
+                          <th>Product Name</th>
+                          <th>User name</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                      </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
                       @foreach ($orders as $item)
-                    <tr>
-                      <td><strong> {{$item['product_name']}} </strong></td>
-                      <td>{{$item['user_name']}}</td>
-                      <td>
-                        {!! $item['status'] == 0 ? '<span class="badge bg-label-primary me-1">Pending</span>' : '<span class="badge bg-label-primary me-1">Confirm</span>' !!}
-                    </td>
-                    
-                    <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href=""
-                              ><i class="bx bx-edit-alt me-1"></i> Confirm </a
-                            >
-                            <a class="dropdown-item" href=""
-                              ><i class="bx bx-trash me-1"></i> Cancel </a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  @endforeach
+                      <tr>
+                          <td><strong> {{$item['product_name']}} </strong></td>
+                          <td>{{$item['user_name']}}</td>
+                          <td>
+                              {!! $item['status'] == 0 ? '<span class="badge bg-label-primary me-1">Pending</span>' : '<span class="badge bg-label-success me-1">Confirmed</span>' !!}
+                          </td>
+                          <td>
+                              <div class="dropdown">
+                                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                  </button>
+                                  <div class="dropdown-menu">
+                                      <form action="{{ route('admin.order.update', $item->id) }}" method="POST">
+                                          @csrf
+                                          @method('PATCH') <!-- Use PATCH for update -->
+                                          <button type="submit" class="dropdown-item" name="status" value="1"><i class="bx bx-edit-alt me-1"></i> Confirm</button>
+                                          <button type="submit" class="dropdown-item" name="status" value="0"><i class="bx bx-trash me-1"></i> Cancel</button>
+                                      </form>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                      @endforeach
                   </tbody>
-                </table>
+              </table>
+              
               </div>
             </div>
 

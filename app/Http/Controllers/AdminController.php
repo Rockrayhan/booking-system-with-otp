@@ -31,6 +31,24 @@ class AdminController extends Controller
     }
 
 
+    public function updateStatus(Request $request, $id)
+{
+    // Validate the incoming request
+    $request->validate([
+        'status' => 'required|boolean',
+    ]);
+
+    // Find the order and update the status
+    $order = Order::findOrFail($id);
+    $order->status = $request->status;
+    $order->save();
+
+    // Redirect back with a success message
+    return redirect()->route('admin.dashboard')->with('msg', 'Order status updated successfully.');
+}
+
+
+
     public function destroy (Request $request)
     {
         

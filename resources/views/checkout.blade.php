@@ -112,11 +112,20 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
+                        <a href="/" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
+
+                    <li class="menu-item active">
+                        <a href="/mybookings" class="menu-link">
+                          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                          <div data-i18n="Analytics">My Bookings</div>
+                        </a>
+                      </li>
+
+
                     <li class="menu-item ms-4 mt-3">
                         <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
@@ -249,6 +258,10 @@
                                                     <input class="form-control" type="text" name="product_name"
                                                         value="{{ $products['name'] }}" id="html5-text-input"
                                                         readonly />
+
+                                                    <input class="form-control" type="text" name="product_id"
+                                                        value="{{ $products['id'] }}" id="html5-text-input"
+                                                        hidden />
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -280,6 +293,10 @@
                                                 <div class="col-md-10">
                                                     <input class="form-control" type="text" name="user_name"
                                                         value="{{ Auth::user()->name }}" id="html5-url-input" />
+
+                                                        {{-- getting user id  --}}
+                                                    <input class="form-control" type="text" name="user_id"
+                                                        value="{{ Auth::user()->id }}" id="html5-url-input" hidden/>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -310,7 +327,7 @@
                                     </div>
                                     <div class="col-md-12 col-lg-12">
                                         <button id="buyNowBtn" type="submit" class="btn btn-primary"><i
-                                                class="tf-icons bx bx-cart-alt me-1"></i>Buy Now</button>
+                                                class="tf-icons bx bx-cart-alt me-1"></i>Book Now</button>
                                     </div>
                                 </div>
                             </form>

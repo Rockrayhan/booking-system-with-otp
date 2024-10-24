@@ -1,5 +1,7 @@
-### Purchasing System with paypal payment method
-
+### Booking System with Email OTP verification
+* User registration with Email OTP.
+* User can Book for products and see booking status.
+* Admin can Accept or cancel the booking.
 
 
 

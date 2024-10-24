@@ -18,6 +18,12 @@ Route::get('/login', [UserController::class, 'showLoginForm'])->name('showLoginF
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 
+
+Route::patch('/admin/order/update/{id}', [AdminController::class, 'updateStatus'])->name('admin.order.update');
+
+Route::get('/mybookings', [UserController::class, 'myBooking'])->name('user.bookings')->middleware('user');
+
+
 Route::post('/logout', [UserController::class, 'destroy'])->name('user.logout');
 
 Route::get('/product/checkout/{id}', [CheckoutController::class, 'index'])->name('product.details')->middleware('user');

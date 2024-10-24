@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
+            $table->string('product_id');
             $table->decimal('price', 8, 2);
             $table->string('user_name');
             $table->string('user_email');
-            $table->string('user_phone')->nullable();
-            $table->text('user_address')->nullable();
-            $table->boolean('status')->default(false); 
+            $table->string('user_id');
+            $table->string('user_phone');
+            $table->text('user_address');
+            $table->boolean('status')->default(false); // New field
             $table->timestamps();
         });
     }

@@ -243,27 +243,50 @@
 
 			<div class="container-xxl flex-grow-1 container-p-y">
 
-        <h1> Welcome Dear,  {{ Auth::user()->name }} </h1>
+        <h1> Here are your Bookings </h1>
 
-              <!-- Examples -->
-              <div class="row mb-5">
-                @foreach ($products as $item)
+  
+
+@if ($confirmed->isEmpty())
+    <p>No confirmed bookings yet.</p>
+@else
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Product Image</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($confirmed as $item)
+                <tr>
                     
-                <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="assets/img/elements/{{$item['image']}} " alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title"> {{$item['name']}} </h5>
-                      <p class="card-text">
-                        {{$item['description']}}
-                      </p>
-                      <a href="/product/checkout/{{ $item['id'] }}" class="btn btn-outline-primary"><i class="tf-icons bx bx-cart-alt me-1"></i>Book Now</a> <span style="float: right; font-size: 20px; font-weight: 700;">$ {{$item['price']}} </span>
-                    </div>
-                  </div>
-                </div>
-                
+                    
+                      <td>  {{ $item->product_name }}    </td>
+                   
+                    <td>
+                      <!-- Assuming 'product_image' is stored in the Order model -->
+                      <img src="assets/img/elements/{{ $item->product->image }}" alt="Product Image" style="width: 100px;">
+                  </td>
+                    <td>$ {{ $item->price }}</td>
+                    <td>    
+
+                      {!! $item['status'] == 0 ? '<span class="badge bg-label-danger me-1">Pending</span>' : '<span class="badge bg-label-success me-1">Confirmed</span>' !!}
+
+                    </td>
+                </tr>
                 @endforeach
-              </div>
+            </tbody>
+        </table>
+    </div>
+@endif
+
+
+
+
               </div>
               <!-- Examples -->
             
