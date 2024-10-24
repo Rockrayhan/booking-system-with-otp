@@ -196,21 +196,15 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div>
-                <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100"  type="submit">Login </button>
                 </div>
               </form>
 
               <p class="text-center">
                 <a href="/register">
-                  <span>New user ? Please Register</span>
+                  <u><b><span>New user ? Please Register</span></b></u>
                 </a> <br>
-                <a href="admin/login">
+                <a href="admin/login" class="">
                   <span><u> <b>-- Admin Login --</b></u></span>
                 </a>
               </p>

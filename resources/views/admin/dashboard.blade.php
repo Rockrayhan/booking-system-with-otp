@@ -238,30 +238,33 @@
                 <table class="table table-dark">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Email</th>
+                      <th>Product Name</th>
+                      <th>User name</th>
                       
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
-                      @foreach ($users as $item)
+                      @foreach ($orders as $item)
                     <tr>
-                      <td><strong> {{$item['name']}} </strong></td>
-                      <td>{{$item['email']}}</td>
-                      <td><span class="badge bg-label-primary me-1">Active</span></td>
+                      <td><strong> {{$item['product_name']}} </strong></td>
+                      <td>{{$item['user_name']}}</td>
                       <td>
+                        {!! $item['status'] == 0 ? '<span class="badge bg-label-primary me-1">Pending</span>' : '<span class="badge bg-label-primary me-1">Confirm</span>' !!}
+                    </td>
+                    
+                    <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                             <i class="bx bx-dots-vertical-rounded"></i>
                           </button>
                           <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                              ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                            <a class="dropdown-item" href=""
+                              ><i class="bx bx-edit-alt me-1"></i> Confirm </a
                             >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                              ><i class="bx bx-trash me-1"></i> Delete</a
+                            <a class="dropdown-item" href=""
+                              ><i class="bx bx-trash me-1"></i> Cancel </a
                             >
                           </div>
                         </div>

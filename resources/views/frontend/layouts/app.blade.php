@@ -246,7 +246,7 @@
                       <p class="card-text">
                         {{$item['description']}}
                       </p>
-                      <a href="/product/checkout/{{ $item['id'] }}" class="btn btn-outline-primary"><i class="tf-icons bx bx-cart-alt me-1"></i>Buy Now</a> <span style="float: right; font-size: 20px; font-weight: 700;">$ {{$item['price']}} </span>
+                      <a href="/product/checkout/{{ $item['id'] }}" class="btn btn-outline-primary"><i class="tf-icons bx bx-cart-alt me-1"></i>Book Now</a> <span style="float: right; font-size: 20px; font-weight: 700;">$ {{$item['price']}} </span>
                     </div>
                   </div>
                 </div>
